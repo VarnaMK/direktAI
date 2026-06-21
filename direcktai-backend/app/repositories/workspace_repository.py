@@ -16,3 +16,15 @@ class WorkspaceRepository:
     async def get_all(self):
         cursor = self.collection.find()
         return await cursor.to_list(length=None)
+    
+    async def update_local_repo_path(self, workspace_id: str, local_repo_path: str):
+        await self.collection.update_one(
+            {
+                "workspace_id": workspace_id
+            },
+            {
+                "$set": {
+                    "local_repo_path": local_repo_path
+                }
+            }
+        )
